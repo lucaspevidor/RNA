@@ -163,8 +163,8 @@ x1 = np.transpose(np.array([np.random.uniform(-4,4,20)]))
 x2 = np.transpose(np.array([np.random.uniform(-4,4,20)]))
 ruido = np.transpose(np.array([np.random.normal(scale=0.1, size=20)]))
 
-d = np.arctan(0.3*x1 + 0.7*x2)# + ruido
-print(d)
+d = np.arctan(0.3*x1 + 0.7*x2) + ruido
+#print(d)
 x = np.append(x1, x2, axis=1)
 #print(x)
 
@@ -179,7 +179,24 @@ saida_processada = linearNet.proc_saida(linearNet.vetor_entradas, True)
 plt.figure()
 plt.plot(x[:,1], d, '.')
 plt.plot(x[:,1], saida_processada[:,0], '.')
-#plt.show()
+
+#Encontrando erro quadrático médio da rede linear por iteração:
+eqm = np.empty([len(linearNet.historicoPesos[0,:]), 1])
+for i in range(len(linearNet.historicoPesos[0,:])):
+    linearNet.pesos = np.transpose([linearNet.historicoPesos[:,i]])
+    saida_processada = np.empty([len(x[:,0]), 1])
+    for k in range(len(x[:,0])):
+        linearNet.set_entradas_pós(np.array([x[k,:]]), normalizar=True)
+        saida_processada[k] = linearNet.proc_saida(linearNet.vetor_entradas, True)
+    erros = d - saida_processada
+    eqm[i] = np.mean(erros**2)
+print('Erro final: {}'.format(eqm[i]))
+
+plt.figure()
+plt.plot(eqm)
+plt.grid()
+plt.xlabel('Nº de iterações')
+plt.ylabel('Erro quadrático médio')
 
 #Alternar vetor de saídas para rede sigmoidal
 maxD = max(abs(d))
@@ -187,13 +204,28 @@ d1 = d/(maxD*2) + 0.5
 
 sigmoidNet = RedeNeural(2, 'Sigmoid', use_bias=True)
 sigmoidNet.set_entradas_ant(x, normalizar=True)
-sigmoidNet.treinar_rede(2, d1, 50)
+sigmoidNet.treinar_rede(2, d1, 20)
 saida_processada = sigmoidNet.proc_saida(sigmoidNet.vetor_entradas, normalizado=True)
 
 plt.figure()
 plt.plot(x[:,1], d1, '.')
 plt.plot(x[:,1], saida_processada[:,0], '.')
 
-plt.show()
+#Encontrando erro quadrático médio da rede sigmoidal por iteração:
+eqm = np.empty([len(sigmoidNet.historicoPesos[0,:]), 1])
+for i in range(len(sigmoidNet.historicoPesos[0,:])):
+    sigmoidNet.pesos = np.transpose([sigmoidNet.historicoPesos[:,i]])
+    saida_processada = np.empty([len(x[:,0]), 1])
+    for k in range(len(x[:,0])):
+        sigmoidNet.set_entradas_pós(np.array([x[k,:]]), normalizar=True)
+        saida_processada[k] = (sigmoidNet.proc_saida(sigmoidNet.vetor_entradas, True) - 0.5)*2*maxD
+    erros = d - saida_processada
+    eqm[i] = np.mean(erros**2)
+print('Erro final: {}'.format(eqm[i]))
 
-print(sigmoidNet.historicoPesos)
+plt.figure()
+plt.plot(eqm)
+plt.grid()
+plt.xlabel('Nº de iterações')
+plt.ylabel('Erro quadrático médio')
+plt.show()
