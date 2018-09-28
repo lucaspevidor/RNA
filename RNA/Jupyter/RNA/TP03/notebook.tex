@@ -1,0 +1,1475 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{TP02}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    <img src="http://www3.ifmg.edu.br/site_campi/p/images/logos/Betim-Simples.png" width="700"></img>
+<b>Engenharia de Controle e Automação - Redes neurais artificiais</b> - Prof. Leandro Freitas
+
+### Lucas Pevidor Reis - 0024855 - TP2
+
+# 1  Objetivo
+
+Implementar uma rede neural Perceptron de única camada para fazer classificação entre duas classes distintas.
+
+
+# 2 Desenvolvimento
+
+## 2.1 Importação de bibliotecas e configuração do matplotlib:
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}155}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+          
+          \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+          \PY{k+kn}{import} \PY{n+nn}{random}
+          \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+\end{Verbatim}
+
+
+    \subsection{2.2 Importação e verificação dos dados de
+entradas}\label{importauxe7uxe3o-e-verificauxe7uxe3o-dos-dados-de-entradas}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}156}]:} \PY{n}{Carro1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+          \PY{n}{Carro2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{}Ford Fusion}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{17058}\PY{p}{,} \PY{l+m+mi}{99900}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{16000}\PY{p}{,} \PY{l+m+mi}{103900}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{44667}\PY{p}{,} \PY{l+m+mi}{104990}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{47000}\PY{p}{,} \PY{l+m+mi}{107900}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{19726}\PY{p}{,} \PY{l+m+mi}{124990}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{19826}\PY{p}{,} \PY{l+m+mi}{116900}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{17700}\PY{p}{,} \PY{l+m+mi}{118900}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{7}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{28204}\PY{p}{,} \PY{l+m+mi}{119890}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{8}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{17000}\PY{p}{,} \PY{l+m+mi}{120950}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro1}\PY{p}{[}\PY{l+m+mi}{9}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{22000}\PY{p}{,} \PY{l+m+mi}{123900}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{}Fiat Uno}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{29501}\PY{p}{,} \PY{l+m+mi}{34000}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{42067}\PY{p}{,} \PY{l+m+mi}{33440}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{34109}\PY{p}{,} \PY{l+m+mi}{31100}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{34713}\PY{p}{,} \PY{l+m+mi}{31300}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{27912}\PY{p}{,} \PY{l+m+mi}{32499}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{28272}\PY{p}{,} \PY{l+m+mi}{31990}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{26733}\PY{p}{,} \PY{l+m+mi}{32990}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{7}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{24990}\PY{p}{,} \PY{l+m+mi}{33660}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{8}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{16000}\PY{p}{,} \PY{l+m+mi}{33800}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{Carro2}\PY{p}{[}\PY{l+m+mi}{9}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{15000}\PY{p}{,} \PY{l+m+mi}{35900}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+          
+          \PY{n}{Entradas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Carro1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{Carro2}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+          \PY{n}{Saida\PYZus{}desejada} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}
+                                  \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Carro1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{Carro2}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    Para que uma rede Percéptron consiga distinguir as classes, elas devem
+ser linearmente separáveis.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}157}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{Carro1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{Carro1}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ford Fusion}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{Carro2}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{Carro2}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fiat Uno}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{50000}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{60000}\PY{p}{,} \PY{l+m+mi}{80000}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{50000}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{150000}\PY{p}{]}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Km rodados}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preço}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gráfico 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Conforme mostrado no Gráfico 1, é possível separar os dois carros
+utilizando uma reta. Portanto, é possível criar uma rede Percéptron
+capaz de distinguir os dois carros.
+
+Foi desenvolvida uma função para fazer a plotagem automaticamente,
+apresentada abaixo:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}158}]:} \PY{k}{def} \PY{n+nf}{plotarGrafico}\PY{p}{(}\PY{n}{entradas}\PY{p}{,} \PY{n}{s\PYZus{}desejada}\PY{p}{,} \PY{n}{pesos}\PY{p}{,} \PY{n}{titulo}\PY{p}{)}\PY{p}{:}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+              \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{el} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{entradas}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{if} \PY{n}{s\PYZus{}desejada}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{el}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{el}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                  \PY{k}{else}\PY{p}{:}
+                      \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{el}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{el}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+              \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{titulo}\PY{p}{)}
+              
+              \PY{k}{if} \PY{n}{pesos} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+                  \PY{n}{x1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.1}\PY{p}{,} \PY{l+m+mf}{2.1}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{x2} \PY{o}{=} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{o}{*}\PY{n}{x1}\PY{o}{*}\PY{n}{pesos}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{n}{pesos}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+                  \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                  
+                  \PY{n}{peso\PYZus{}modulo} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{pesos}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{pesos}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}
+                  \PY{n}{pesos} \PY{o}{=} \PY{n}{pesos}\PY{o}{/}\PY{n}{peso\PYZus{}modulo}
+                  \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{pesos}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{pesos}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{2.3 Implementação da rede
+neural}\label{implementauxe7uxe3o-da-rede-neural}
+
+Optou-se por realizar a implementação da rede neural utilizando classes,
+visto que facilita o processo de desenvolvimento.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}164}]:} \PY{k}{class} \PY{n+nc}{Perceptron}\PY{p}{:}
+              \PY{c+c1}{\PYZsh{}Função de inicialização da classe}
+              \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{n\PYZus{}entradas}\PY{p}{,} \PY{n}{func\PYZus{}act}\PY{p}{,} \PY{n}{use\PYZus{}bias}\PY{p}{)}\PY{p}{:}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{use\PYZus{}bias} \PY{o}{=} \PY{n}{use\PYZus{}bias}        
+                  \PY{k}{if} \PY{n}{use\PYZus{}bias}\PY{p}{:}
+                      \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n}{n\PYZus{}entradas}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+                  \PY{k}{else}\PY{p}{:}
+                      \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n}{n\PYZus{}entradas}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{func\PYZus{}act} \PY{o}{=} \PY{n}{func\PYZus{}act}   
+              
+              \PY{k}{def} \PY{n+nf}{reset}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}    
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+                      
+              \PY{c+c1}{\PYZsh{}Definir entradas antes do treinamento da rede}
+              \PY{k}{def} \PY{n+nf}{set\PYZus{}entradas\PYZus{}ant}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{entradas}\PY{p}{,} \PY{n}{normalizar}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{use\PYZus{}bias}\PY{p}{:}
+                      \PY{n}{vetor\PYZus{}1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
+                      \PY{k}{if} \PY{n}{normalizar}\PY{p}{:}
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{normalizar}\PY{p}{(}\PY{n}{entradas}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{entr\PYZus{}normalizada}\PY{p}{,} \PY{n}{vetor\PYZus{}1}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                      \PY{k}{else}\PY{p}{:}
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{entradas}\PY{p}{,} \PY{n}{vetor\PYZus{}1}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                  \PY{k}{else}\PY{p}{:}
+                      \PY{k}{if} \PY{n}{normalizar}\PY{p}{:}                
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{normalizar}\PY{p}{(}\PY{n}{entradas}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}
+                      \PY{k}{else}\PY{p}{:}
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas} \PY{o}{=} \PY{n}{entradas}
+              
+              \PY{c+c1}{\PYZsh{}Definir entradas após treinamento da rede}
+              \PY{k}{def} \PY{n+nf}{set\PYZus{}entradas\PYZus{}pós}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{entradas}\PY{p}{,} \PY{n}{normalizar}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{use\PYZus{}bias}\PY{p}{:}
+                      \PY{n}{vetor\PYZus{}1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
+                      \PY{k}{if} \PY{n}{normalizar}\PY{p}{:}            
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{normalizar}\PY{p}{(}\PY{n}{entradas}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}\PY{p}{,} \PY{n}{vetor\PYZus{}1}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                      \PY{k}{else}\PY{p}{:}
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{entradas}\PY{p}{,} \PY{n}{vetor\PYZus{}1}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                  \PY{k}{else}\PY{p}{:}
+                      \PY{k}{if} \PY{n}{normalizar}\PY{p}{:}
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{normalizar}\PY{p}{(}\PY{n}{entradas}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+                      \PY{k}{else}\PY{p}{:}                    
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas} \PY{o}{=} \PY{n}{entradas}
+              
+              \PY{k}{def} \PY{n+nf}{normalizar}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{entradas}\PY{p}{,} \PY{n}{utilizar\PYZus{}parametros\PYZus{}anteriores}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{if} \PY{n}{utilizar\PYZus{}parametros\PYZus{}anteriores} \PY{o}{==} \PY{k+kc}{False}\PY{p}{:}
+                      \PY{c+c1}{\PYZsh{}Encontrar média e desvio padrão a partir das entradas fornecidas.}
+                      \PY{c+c1}{\PYZsh{}Executado antes do treinamento da rede}
+                      \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{media} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+                      \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{desvpad} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+                      \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{entr\PYZus{}normalizada} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+                  
+                      \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{media}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{desvpad}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{var}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}            
+                          \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{entr\PYZus{}normalizada}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{media}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{p}{)} \PY{o}{/} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{desvpad}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                      \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{entr\PYZus{}normalizada}
+                  \PY{k}{else}\PY{p}{:}
+                      \PY{c+c1}{\PYZsh{}Normaliza os dados de entrada fornecidos conforme a média e desvio padrão já encontrados anteriormente}
+                      \PY{n}{entr\PYZus{}nova\PYZus{}normalizada} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{float}\PY{p}{)}
+                      \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{:}                
+                          \PY{n}{entr\PYZus{}nova\PYZus{}normalizada}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{media}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{p}{)} \PY{o}{/} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{desvpad}\PY{p}{[}\PY{n}{i}\PY{p}{]}            
+                      
+                      \PY{k}{return} \PY{n}{entr\PYZus{}nova\PYZus{}normalizada}    
+                  
+              \PY{k}{def} \PY{n+nf}{proc\PYZus{}saida}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{entradas}\PY{p}{,} \PY{n}{normalizado}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{if} \PY{o+ow}{not} \PY{n}{normalizado}\PY{p}{:}
+                      \PY{c+c1}{\PYZsh{}Normalização das entradas utilizando média e desvpad já encontrados}
+                      \PY{n}{entr\PYZus{}nova\PYZus{}normalizada} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{normalizar}\PY{p}{(}\PY{n}{entradas}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+                  \PY{k}{else}\PY{p}{:}
+                      \PY{n}{entr\PYZus{}nova\PYZus{}normalizada} \PY{o}{=} \PY{n}{entradas}
+                  
+                  \PY{n}{v} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{entr\PYZus{}nova\PYZus{}normalizada}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos}\PY{p}{)}
+                  \PY{k}{if}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{func\PYZus{}act} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bipolar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{saida} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}            
+                      \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{v}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                          \PY{k}{if}\PY{p}{(}\PY{n}{v}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{p}{:}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+                              \PY{n}{saida} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{saida}\PY{p}{,} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                          \PY{k}{else}\PY{p}{:}
+                              \PY{n}{saida} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{saida}\PY{p}{,} \PY{p}{[}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                      \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{saida} \PY{o}{=} \PY{n}{saida}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}
+                      \PY{k}{return} \PY{n}{saida}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}
+                      
+              \PY{k}{def} \PY{n+nf}{treinar\PYZus{}rede}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{fator\PYZus{}aprendizado}\PY{p}{,} \PY{n}{saida\PYZus{}desejada}\PY{p}{,} \PY{n}{max\PYZus{}iterações}\PY{p}{,} \PY{n}{plot}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{redeTreinada} \PY{o}{=} \PY{k+kc}{False}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoAcertos} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoPesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                  
+                  \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{max\PYZus{}iterações}\PY{p}{)}\PY{p}{:}
+                      \PY{k}{if} \PY{o+ow}{not} \PY{n}{redeTreinada}\PY{p}{:}
+                          \PY{n}{flagAlteração} \PY{o}{=} \PY{k+kc}{False}
+                          \PY{n}{acertos} \PY{o}{=} \PY{l+m+mi}{0}
+                          \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                              \PY{c+c1}{\PYZsh{}Testa as entradas até encontrar um erro}
+                              \PY{c+c1}{\PYZsh{}Caso encontrado, continua testando as outras entradas para obter a quantidade de acertos para}
+                              \PY{c+c1}{\PYZsh{}os pesos atuais. Em seguida atualiza os pesos e reinicia os testes.}
+                              \PY{n}{res} \PY{o}{=} \PY{n}{saida\PYZus{}desejada}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{proc\PYZus{}saida}\PY{p}{(}\PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+                              \PY{k}{if} \PY{n}{res} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                                  \PY{n}{acertos} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                              \PY{k}{else}\PY{p}{:}
+                                  \PY{n}{deltaW} \PY{o}{=} \PY{n}{fator\PYZus{}aprendizado} \PY{o}{*} \PY{n}{res} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{p}{:}\PY{p}{]}                    
+                                  \PY{n}{flagAlteração} \PY{o}{=} \PY{k+kc}{True}
+                                  
+                                  \PY{k}{if} \PY{n}{plot}\PY{p}{:}
+                                      \PY{n}{plotarGrafico}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{,} \PY{n}{saida\PYZus{}desejada}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                                  
+                                  \PY{c+c1}{\PYZsh{}Termina de checar a quantidade de acertos}
+                                  \PY{c+c1}{\PYZsh{}antes de atualizar os pesos}
+                                  \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{j}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                                      \PY{n}{res} \PY{o}{=} \PY{n}{saida\PYZus{}desejada}\PY{p}{[}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{proc\PYZus{}saida}\PY{p}{(}\PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{[}\PY{n}{k}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+                                      \PY{k}{if} \PY{n}{res} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                                          \PY{n}{acertos} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                                  
+                                  \PY{c+c1}{\PYZsh{}Salva os acertos e pesos}
+                                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoAcertos}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{acertos}\PY{p}{)}
+                                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoPesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoPesos}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                                  
+                                  \PY{c+c1}{\PYZsh{}Atualiza os pesos                               }
+                                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos} \PY{o}{+}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{[}\PY{n}{deltaW}\PY{p}{]}\PY{p}{)}
+                                  \PY{k}{break}
+                          
+                          \PY{k}{if} \PY{n}{flagAlteração} \PY{o}{==} \PY{k+kc}{False}\PY{p}{:}
+                              \PY{n}{redeTreinada} \PY{o}{=} \PY{k+kc}{True}
+                              \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoAcertos}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{acertos}\PY{p}{)}
+                              \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoPesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoPesos}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                              \PY{k}{if} \PY{n}{plot}\PY{p}{:}
+                                  \PY{n}{plotarGrafico}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{,} \PY{n}{saida\PYZus{}desejada}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                  
+                  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoErros} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                  \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoAcertos}\PY{p}{)}\PY{p}{)}\PY{p}{:}            
+                      \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoErros}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoAcertos}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                  
+                  \PY{k}{if} \PY{n}{redeTreinada} \PY{o}{==} \PY{k+kc}{False}\PY{p}{:}
+                      \PY{c+c1}{\PYZsh{}Se não foi possível obter 100\PYZpc{} de acerto durante as iterações}
+                      \PY{c+c1}{\PYZsh{}encontra e define como pesos os que obtiveram mais acertos}
+                      \PY{n}{indiceMax} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoAcertos}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoAcertos}\PY{p}{)}\PY{p}{)}                        
+                      \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{pesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoPesos}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{indiceMax}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+                      \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nº erros: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n+nb}{max}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{historicoAcertos}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{2.3.1 - Implementação da função de
+normalização}\label{implementauxe7uxe3o-da-funuxe7uxe3o-de-normalizauxe7uxe3o}
+
+Antes de entrar com os dados de entrada na rede Percéptron eles devem
+ser normalizados. A normalização dos dados foi implementada utilizando o
+método do desvio padrão, dado pela fórmula:
+
+\(x_{norm} = \frac{x - m}{\sigma}\)
+
+onde \(m\) é a média dos valores das entradas e \(\sigma\) é o desvio
+padrão das amostras.
+
+\begin{figure}
+\centering
+\includegraphics{https://i.imgur.com/bha8A6E.png}
+\caption{Norm}
+\end{figure}
+
+    Na função implementada existe a possibilidade de a partir de um array de
+entradas, obter sua média e desvio padrão e normalizá-lo, e a
+possibilidade de obter sua normalização partindo de uma média e desvio
+padrão já obtidos anteriormente.
+
+\subsubsection{2.3.2 - Implementação do processo de obtenção da saída da
+rede
+neural}\label{implementauxe7uxe3o-do-processo-de-obtenuxe7uxe3o-da-sauxedda-da-rede-neural}
+
+A saída \(y\) da rede neural pode ser obtida a partir das seguintes
+equações:
+
+\begin{figure}
+\centering
+\includegraphics{https://i.imgur.com/KDS3pA9.png\%20=100x50}
+\caption{}
+\end{figure}
+
+Onde \(w_i\) é o vetor de pesos e \(x_i\) o vetor de entradas.
+\(\varphi\) é a função de ativação.
+\includegraphics{https://i.imgur.com/A33iPHa.png}
+
+    \subsubsection{2.3.3 - Implementação do algoritmo de treinamento da rede
+neural}\label{implementauxe7uxe3o-do-algoritmo-de-treinamento-da-rede-neural}
+
+O algoritmo de treinamento funciona conforme as equações:
+
+\(w(n+1) = w(n) + \Delta w\)
+
+\(\Delta w = \eta (d(n)-y(n))x(n)\)
+
+A função de treinamento recebe como argumentos o fator de aprendizado
+\(\eta\), o vetor de saídas desejadas e um número inteiro que representa
+a quantidade limite de iterações a serem executadas pelo algoritmo. No
+caso de não haver uma solução ótima para a separação dos dados de
+entrada o algoritmo seleciona a solução que obteve mais acertos durante
+o processo.
+
+\includegraphics{https://i.imgur.com/J3iQfXz.png}
+\includegraphics{https://i.imgur.com/KYGCjFT.png}
+
+    \subsection{2.4 - Inicialização da rede
+neural}\label{inicializauxe7uxe3o-da-rede-neural}
+
+Como a rede neural está sendo implementada em uma classe, é necessário
+iniciá-la primeiramente:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{rede1} \PY{o}{=} \PY{n}{Perceptron}\PY{p}{(}\PY{n}{n\PYZus{}entradas}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{func\PYZus{}act}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bipolar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{use\PYZus{}bias}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{2.5 - Normalização dos dados de
+entrada}\label{normalizauxe7uxe3o-dos-dados-de-entrada}
+
+Com a rede já inicializada é necessário realizar a normalização dos
+dados de entrada. Isto é feito automaticamente ao chamar a função de
+importação de entradas da classe Perceptron. As entradas ficam
+armazenadas no objeto \emph{rede1}, nas variáveis
+\emph{entr\_normalizada} e \emph{vetor\_entradas}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{rede1}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}ant}\PY{p}{(}\PY{n}{Entradas}\PY{p}{,} \PY{n}{normalizar}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{n}{plotarGrafico}\PY{p}{(}\PY{n}{rede1}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{,} \PY{n}{Saida\PYZus{}desejada}\PY{p}{,} \PY{k+kc}{None}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gráfico 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{2.6 Vetor de pesos para separação dos
+dados}\label{vetor-de-pesos-para-separauxe7uxe3o-dos-dados}
+
+Observando o Gráfico 2 conclui-se que para separar os dados pode-se
+utilizar um vetor \((0, -0.5)\). Com o vetor nesta forma, a saída
+desejada se torna 1 para os Fiat Uno e -1 para os Ford Fusion.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{w} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        
+        \PY{n}{plotarGrafico}\PY{p}{(}\PY{n}{rede1}\PY{o}{.}\PY{n}{entr\PYZus{}normalizada}\PY{p}{,} \PY{n}{Saida\PYZus{}desejada}\PY{p}{,} \PY{n}{w}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gráfico 3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{2.7 Execução do algoritmo de
+aprendizagem}\label{execuuxe7uxe3o-do-algoritmo-de-aprendizagem}
+
+    Execução do treinamento para 5 amostras de 8 elementos:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{n\PYZus{}amostras} \PY{o}{=} \PY{l+m+mi}{8}
+        \PY{n}{vet\PYZus{}ent} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}amostras}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}   \PY{c+c1}{\PYZsh{}Vetor de amostras de entrada}
+        \PY{n}{vet\PYZus{}sdesejadas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}amostras}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n}{lista\PYZus{}erros} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{}Geração de amostras e treinamento da rede para fator de aprendizagem = 0.3}
+        \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+            \PY{n}{k}\PY{o}{=}\PY{l+m+mi}{0}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Amostra }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{random}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{19}\PY{p}{)}\PY{p}{,} \PY{n}{n\PYZus{}amostras}\PY{p}{)}\PY{p}{:}    
+                \PY{n}{vet\PYZus{}ent}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{rede1}\PY{o}{.}\PY{n}{entr\PYZus{}normalizada}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                \PY{n}{vet\PYZus{}sdesejadas}\PY{p}{[}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{Saida\PYZus{}desejada}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}        
+                \PY{c+c1}{\PYZsh{}print(\PYZsq{}\PYZob{}\PYZcb{} \PYZhy{} \PYZob{}\PYZcb{}: \PYZob{}\PYZcb{}\PYZsq{}.format(vet\PYZus{}ent[k], vet\PYZus{}sdesejadas[k], i))}
+                \PY{n}{k} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+            
+            \PY{n}{rede1}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}pós}\PY{p}{(}\PY{n}{vet\PYZus{}ent}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}
+            \PY{n}{rede1}\PY{o}{.}\PY{n}{pesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+            \PY{n}{rede1}\PY{o}{.}\PY{n}{treinar\PYZus{}rede}\PY{p}{(}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{vet\PYZus{}sdesejadas}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+            
+            \PY{n}{lista\PYZus{}erros}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{rede1}\PY{o}{.}\PY{n}{historicoErros}\PY{p}{)}
+\end{Verbatim}
+
+
+    Comparando o desempenho do treinamento da rede para as amostras geradas:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{lista\PYZus{}erros}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Amostra }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Etapa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Erros}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Testando para fator de aprendizagem = 2:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{vet\PYZus{}ent} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}amostras}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}   \PY{c+c1}{\PYZsh{}Vetor de amostras de entrada}
+        \PY{n}{vet\PYZus{}sdesejadas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}amostras}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n}{lista\PYZus{}erros} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{}Geração de amostras e treinamento da rede para fator de aprendizagem = 2}
+        \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+            \PY{n}{k}\PY{o}{=}\PY{l+m+mi}{0}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Amostra }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{random}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{19}\PY{p}{)}\PY{p}{,} \PY{n}{n\PYZus{}amostras}\PY{p}{)}\PY{p}{:}    
+                \PY{n}{vet\PYZus{}ent}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{rede1}\PY{o}{.}\PY{n}{entr\PYZus{}normalizada}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                \PY{n}{vet\PYZus{}sdesejadas}\PY{p}{[}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{Saida\PYZus{}desejada}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+                \PY{c+c1}{\PYZsh{}print(\PYZsq{}\PYZob{}\PYZcb{} \PYZhy{} \PYZob{}\PYZcb{}: \PYZob{}\PYZcb{}\PYZsq{}.format(vet\PYZus{}ent[k], vet\PYZus{}sdesejadas[k], i))}
+                \PY{n}{k} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                
+            \PY{n}{rede1}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}pós}\PY{p}{(}\PY{n}{vet\PYZus{}ent}\PY{p}{,} \PY{n}{normalizar}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+            \PY{n}{rede1}\PY{o}{.}\PY{n}{pesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+            \PY{n}{rede1}\PY{o}{.}\PY{n}{treinar\PYZus{}rede}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{vet\PYZus{}sdesejadas}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+                
+            \PY{n}{lista\PYZus{}erros}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{rede1}\PY{o}{.}\PY{n}{historicoErros}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{lista\PYZus{}erros}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Amostra }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Etapa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Erros}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Testando o desempenho da rede para o fator de aprendizagem = 0.02
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{vet\PYZus{}ent} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}amostras}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}   \PY{c+c1}{\PYZsh{}Vetor de amostras de entrada}
+        \PY{n}{vet\PYZus{}sdesejadas} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{[}\PY{n}{n\PYZus{}amostras}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n}{lista\PYZus{}erros} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{}Geração de amostras e treinamento da rede para fator de aprendizagem = 0.02}
+        \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+            \PY{n}{k}\PY{o}{=}\PY{l+m+mi}{0}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Amostra }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{random}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{19}\PY{p}{)}\PY{p}{,} \PY{n}{n\PYZus{}amostras}\PY{p}{)}\PY{p}{:}    
+                \PY{n}{vet\PYZus{}ent}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{=} \PY{n}{rede1}\PY{o}{.}\PY{n}{entr\PYZus{}normalizada}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                \PY{n}{vet\PYZus{}sdesejadas}\PY{p}{[}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{n}{Saida\PYZus{}desejada}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+                \PY{c+c1}{\PYZsh{}print(\PYZsq{}\PYZob{}\PYZcb{} \PYZhy{} \PYZob{}\PYZcb{}: \PYZob{}\PYZcb{}\PYZsq{}.format(vet\PYZus{}ent[k], vet\PYZus{}sdesejadas[k], i))}
+                \PY{n}{k} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                
+            \PY{n}{rede1}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}pós}\PY{p}{(}\PY{n}{vet\PYZus{}ent}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}
+            \PY{n}{rede1}\PY{o}{.}\PY{n}{pesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+            \PY{n}{rede1}\PY{o}{.}\PY{n}{treinar\PYZus{}rede}\PY{p}{(}\PY{l+m+mf}{0.02}\PY{p}{,} \PY{n}{vet\PYZus{}sdesejadas}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+                
+            \PY{n}{lista\PYZus{}erros}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{rede1}\PY{o}{.}\PY{n}{historicoErros}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{lista\PYZus{}erros}\PY{p}{[}\PY{n}{k}\PY{p}{]}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Amostra }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{k}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Etapa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Erros}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Percebe-se que para valores de \(\eta\) muito pequenos a rede demora
+mais tempo para ser treinada, visto que a velocidade de rotação do vetor
+de pesos é reduzida. Para valores mais altos a rotação é mais rápida,
+treinando a rede com uma velocidade maior, porém um valor muito alto de
+\(\eta\) pode tornar o treinamento instável.
+
+\subsection{2.8 Teste da rede neural para novas
+amostras}\label{teste-da-rede-neural-para-novas-amostras}
+
+Inicialmente a rede neural é treinada utilizando todas as 20 amostras de
+carros:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{rede1}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}ant}\PY{p}{(}\PY{n}{Entradas}\PY{p}{,} \PY{n}{normalizar}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{rede1}\PY{o}{.}\PY{n}{treinar\PYZus{}rede}\PY{p}{(}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{Saida\PYZus{}desejada}\PY{p}{,} \PY{l+m+mi}{30}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}
+        
+        \PY{n}{plotarGrafico}\PY{p}{(}\PY{n}{rede1}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{,} \PY{n}{Saida\PYZus{}desejada}\PY{p}{,} \PY{n}{rede1}\PY{o}{.}\PY{n}{pesos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Novas amostras de carros:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{Carros\PYZus{}novos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{empty}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}Ford Fusion:}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{44660}\PY{p}{,} \PY{l+m+mi}{104000}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{20860}\PY{p}{,} \PY{l+m+mi}{117800}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{20000}\PY{p}{,} \PY{l+m+mi}{118000}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{19000}\PY{p}{,} \PY{l+m+mi}{118990}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{20100}\PY{p}{,} \PY{l+m+mi}{120900}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{16000}\PY{p}{,} \PY{l+m+mi}{125000}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{30000}\PY{p}{,} \PY{l+m+mi}{125000}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{7}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{12000}\PY{p}{,} \PY{l+m+mi}{129900}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{8}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{7000}\PY{p}{,} \PY{l+m+mi}{130990}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{9}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{9700}\PY{p}{,} \PY{l+m+mi}{119000}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{}Fiat Uno}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{10}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{19000}\PY{p}{,} \PY{l+m+mi}{27990}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{11}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{28000}\PY{p}{,} \PY{l+m+mi}{30490}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{12}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{35000}\PY{p}{,} \PY{l+m+mi}{30580}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{13}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{37600}\PY{p}{,} \PY{l+m+mi}{30790}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{14}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{14000}\PY{p}{,} \PY{l+m+mi}{30900}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{15}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{66000}\PY{p}{,} \PY{l+m+mi}{31160}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{16}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{65000}\PY{p}{,} \PY{l+m+mi}{31000}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{17}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{44000}\PY{p}{,} \PY{l+m+mi}{31350}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{18}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{45000}\PY{p}{,} \PY{l+m+mi}{31490}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{l+m+mi}{19}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{47500}\PY{p}{,} \PY{l+m+mi}{31490}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+        
+        \PY{n}{Entrada\PYZus{}nova} \PY{o}{=} \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}
+        \PY{n}{Saida\PYZus{}desejada\PYZus{}nova} \PY{o}{=} \PY{n}{Carros\PYZus{}novos}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}
+\end{Verbatim}
+
+
+    Testando os novos dados normalizados na rede neural
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{rede1}\PY{o}{.}\PY{n}{proc\PYZus{}saida}\PY{p}{(}\PY{n}{Entrada\PYZus{}nova}\PY{p}{,} \PY{n}{normalizado}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+        
+        \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{el} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{rede1}\PY{o}{.}\PY{n}{saida}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n}{el} \PY{o}{==} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Carro }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ \PYZhy{} Identificado como Fusion}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Carro }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ \PYZhy{} Identificado como Uno}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+                
+        \PY{c+c1}{\PYZsh{}Plotando gráfico das amostras novas:}
+        \PY{n}{Entrada\PYZus{}nova\PYZus{}norm} \PY{o}{=} \PY{n}{rede1}\PY{o}{.}\PY{n}{normalizar}\PY{p}{(}\PY{n}{Entrada\PYZus{}nova}\PY{p}{,} \PY{n}{utilizar\PYZus{}parametros\PYZus{}anteriores}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{plotarGrafico}\PY{p}{(}\PY{n}{Entrada\PYZus{}nova\PYZus{}norm}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{[}\PY{n}{Saida\PYZus{}desejada\PYZus{}nova}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{rede1}\PY{o}{.}\PY{n}{pesos}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Todas as 20 novas amostras foram classificadas corretamente. O gráfico
+acima indica a reta de separação pouco inclinada. Portanto conclui-se
+que os dois veículos serão bem classificados pela rede.
+
+    \section{3 - Classificação de espécie de
+plantas}\label{classificauxe7uxe3o-de-espuxe9cie-de-plantas}
+
+Utilizando a base de dados disponível em
+http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data,
+serão criadas 3 redes Perceptron para identificação das plantas. Serão
+separadas 40\% das amostras para treinamento da rede, e o restante será
+utilizado para validação.
+
+São 3 tipos de plantas: Iris Setosa, Iris Versicolor e Iris Virginica.
+
+\subsection{3.1 - Classificação da Iris
+Setosa}\label{classificauxe7uxe3o-da-iris-setosa}
+
+\subsubsection{3.1.1 - Importação dos
+dados:}\label{importauxe7uxe3o-dos-dados}
+
+As 4 primeiras colunas dos dados correspondem à características das
+plantas. A coluna 5 corresponde à saída desejada da rede neural. Saída 1
+indica Iris Setosa e -1 indica outra planta.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{setosa\PYZus{}treino} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+        \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.6}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.7}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.3}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.0}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.6}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{3.6}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{4.1}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.2}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.1}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.6}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{6.6}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.3}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.2}\PY{p}{,}\PY{l+m+mf}{3.6}\PY{p}{,}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.3}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.8}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.3}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    Com os dados importados, é feita a separação dos mesmos em 2 arrays: um
+de entrada e um de saída.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{}Separação do array de dados em array de entradas e saída desejada}
+        \PY{n}{setosa\PYZus{}entrada} \PY{o}{=} \PY{n}{setosa\PYZus{}treino}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{4}\PY{p}{]}
+        \PY{n}{setosa\PYZus{}saida\PYZus{}desejada} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{[}\PY{n}{setosa\PYZus{}treino}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{3.1.2 - Treinamento da rede}\label{treinamento-da-rede}
+
+Com os dados importados a rede neural é instanciada e treinada para
+identificação da Iris Setosa:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}165}]:} \PY{n}{rede\PYZus{}setosa} \PY{o}{=} \PY{n}{Perceptron}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bipolar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{use\PYZus{}bias}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{c+c1}{\PYZsh{}Instanciamento da rede}
+          
+          \PY{c+c1}{\PYZsh{}Define as entradas, faz a normalização e adiciona a coluna p/ bias}
+          \PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}ant}\PY{p}{(}\PY{n}{setosa\PYZus{}entrada}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)} 
+          \PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{treinar\PYZus{}rede}\PY{p}{(}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{setosa\PYZus{}saida\PYZus{}desejada}\PY{p}{,} \PY{l+m+mi}{3000}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)} \PY{c+c1}{\PYZsh{}Treinamento, f\PYZus{}aprendizagem = 0.3}
+\end{Verbatim}
+
+
+    \subsubsection{3.1.3 - Validação}\label{validauxe7uxe3o}
+
+Com a rede treinada, os dados para validação são importados e separados:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{setosa\PYZus{}validação} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+        \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.7}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{3.6}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{l+m+mf}{0.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{4.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.6}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.3}\PY{p}{,}\PY{l+m+mf}{3.7}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.3}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.6}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.8}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{l+m+mf}{3.7}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.1}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.2}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.3}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.1}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.2}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.2}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.2}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.4}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.9}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.8}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{6.2}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+        \PY{p}{[}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}Separação do array de dados em array de entradas e saída desejada}
+        \PY{n}{setosa\PYZus{}entrada\PYZus{}val} \PY{o}{=} \PY{n}{setosa\PYZus{}validação}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{4}\PY{p}{]}
+        \PY{n}{setosa\PYZus{}saida\PYZus{}desejada\PYZus{}val} \PY{o}{=} \PY{n}{setosa\PYZus{}validação}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}
+\end{Verbatim}
+
+
+    \subsubsection{3.1.4 - Resultados}\label{resultados}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}177}]:} \PY{c+c1}{\PYZsh{}Define entradas, faz a normalização com base na média e desivo padrão encontrados anteriormente }
+          \PY{c+c1}{\PYZsh{}e adiciona coluna p/ bias}
+          \PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}pós}\PY{p}{(}\PY{n}{setosa\PYZus{}entrada\PYZus{}val}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+          
+          \PY{n}{acertos} \PY{o}{=} \PY{l+m+mi}{0}
+          \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{el} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{proc\PYZus{}saida}\PY{p}{(}\PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+              \PY{k}{if} \PY{n}{setosa\PYZus{}saida\PYZus{}desejada\PYZus{}val}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{n}{el}\PY{p}{:}
+                  \PY{n}{acertos} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                  
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Quantidade de acertos: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{acertos}\PY{p}{)}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percentual de acertos: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{acertos}\PY{o}{*}\PY{l+m+mi}{100}\PY{o}{/}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Quantidade de acertos: 89
+Percentual de acertos: 98.88888888888889\%
+
+    \end{Verbatim}
+
+    No histograma abaixo pode-se observar que a taxa de acerto da rede
+neural é extremamente alta.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}179}]:} \PY{n}{lista\PYZus{}percent\PYZus{}acertos} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
+              \PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{pesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random\PYZus{}sample}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{}Randomização de pesos}
+              \PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}ant}\PY{p}{(}\PY{n}{setosa\PYZus{}entrada}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)} 
+              \PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{treinar\PYZus{}rede}\PY{p}{(}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{setosa\PYZus{}saida\PYZus{}desejada}\PY{p}{,} \PY{l+m+mi}{3000}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}    
+              \PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}pós}\PY{p}{(}\PY{n}{setosa\PYZus{}entrada\PYZus{}val}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+          
+              \PY{n}{acertos} \PY{o}{=} \PY{l+m+mi}{0}
+              \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{el} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{proc\PYZus{}saida}\PY{p}{(}\PY{n}{rede\PYZus{}setosa}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{if} \PY{n}{setosa\PYZus{}saida\PYZus{}desejada\PYZus{}val}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{n}{el}\PY{p}{:}
+                      \PY{n}{acertos} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+              \PY{n}{lista\PYZus{}percent\PYZus{}acertos}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{acertos}\PY{o}{*}\PY{l+m+mi}{100}\PY{o}{/}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+              
+          \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{lista\PYZus{}percent\PYZus{}acertos}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percentual de acertos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nº de redes testadas}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Histograma 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_48_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{3.2 - Classificação da Iris
+Versicolor}\label{classificauxe7uxe3o-da-iris-versicolor}
+
+\subsubsection{3.2.1 - Importação dos
+dados:}\label{importauxe7uxe3o-dos-dados}
+
+Assim como nos dados da Iris Setosa, as 4 primeiras colunas dos dados
+correspondem à características das plantas. A coluna 5 corresponde à
+saída desejada da rede neural. Saída 1 indica Iris Versicolor e -1
+indica outra planta. Os dados importados foram em seguida separados em
+um vetor de entrada \emph{versicolor\_entrada} e de saída desejada
+\emph{versicolor\_sd}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}189}]:} \PY{n}{versicolor\PYZus{}treino} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+              \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.6}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.7}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.3}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.0}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.6}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{3.6}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{4.1}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.2}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.1}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.6}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{6.6}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.3}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.2}\PY{p}{,}\PY{l+m+mf}{3.6}\PY{p}{,}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.3}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.8}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.3}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{}Separação p/ vetores}
+          \PY{n}{versicolor\PYZus{}entrada} \PY{o}{=} \PY{n}{versicolor\PYZus{}treino}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{4}\PY{p}{]}
+          \PY{n}{versicolor\PYZus{}sd} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{[}\PY{n}{versicolor\PYZus{}treino}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{3.2.2 - Treinamento da rede}\label{treinamento-da-rede}
+
+Com os dados já importados e separados, agora a rede é instanciada e
+treinada.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}200}]:} \PY{n}{rede\PYZus{}versicolor} \PY{o}{=} \PY{n}{Perceptron}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bipolar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{use\PYZus{}bias}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{c+c1}{\PYZsh{}Instanciamento}
+          \PY{n}{rede\PYZus{}versicolor}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}ant}\PY{p}{(}\PY{n}{versicolor\PYZus{}entrada}\PY{p}{,} \PY{n}{normalizar}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{c+c1}{\PYZsh{}Processamento das entradas}
+          \PY{n}{rede\PYZus{}versicolor}\PY{o}{.}\PY{n}{treinar\PYZus{}rede}\PY{p}{(}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{n}{versicolor\PYZus{}sd}\PY{p}{,} \PY{l+m+mi}{3000}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)} \PY{c+c1}{\PYZsh{}Treinamento f\PYZus{}aprendizado=0.3}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Nº erros: 15
+
+    \end{Verbatim}
+
+    Percebe-se que o processo de treinamento para identificação da
+Iris-Versicolor não foi tão efetivo quanto o treinamento da Iris-Setosa.
+Das 60 amostras utilizadas para o treinamento aproximadamente 15 não
+foram bem classificadas. Ou seja, 25\% das amostras foram classificadas
+de forma errada. Alterar o fator de aprendizado não surtiu efeito.
+
+\subsubsection{3.2.3 - Validação}\label{validauxe7uxe3o}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}203}]:} \PY{n}{versicolor\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}
+              \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.7}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{3.6}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{l+m+mf}{0.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{4.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.6}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{l+m+mf}{0.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.3}\PY{p}{,}\PY{l+m+mf}{3.7}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.3}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.6}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.8}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{1.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{l+m+mf}{3.7}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{3.9}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{4.7}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.1}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{4.4}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.6}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{4.0}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{1.0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.2}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.2}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{4.3}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{1.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.1}\PY{p}{,}\PY{l+m+mf}{1.3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.1}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.6}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{6.6}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{,}\PY{l+m+mf}{1.7}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.3}\PY{p}{,}\PY{l+m+mf}{2.9}\PY{p}{,}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.2}\PY{p}{,}\PY{l+m+mf}{3.6}\PY{p}{,}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.3}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.8}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.3}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.2}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.2}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.9}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.2}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{1.6}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.4}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.9}\PY{p}{,}\PY{l+m+mf}{3.8}\PY{p}{,}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.2}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.8}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.6}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{1.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{7.7}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{6.1}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.4}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{5.5}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.0}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{4.8}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{2.1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{5.6}\PY{p}{,}\PY{l+m+mf}{2.4}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.9}\PY{p}{,}\PY{l+m+mf}{3.1}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.8}\PY{p}{,}\PY{l+m+mf}{2.7}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.8}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{,}\PY{l+m+mf}{5.7}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.7}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.3}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{5.0}\PY{p}{,}\PY{l+m+mf}{1.9}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.5}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.2}\PY{p}{,}\PY{l+m+mf}{2.0}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{6.2}\PY{p}{,}\PY{l+m+mf}{3.4}\PY{p}{,}\PY{l+m+mf}{5.4}\PY{p}{,}\PY{l+m+mf}{2.3}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+              \PY{p}{[}\PY{l+m+mf}{5.9}\PY{p}{,}\PY{l+m+mf}{3.0}\PY{p}{,}\PY{l+m+mf}{5.1}\PY{p}{,}\PY{l+m+mf}{1.8}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{}Separação do array de dados em array de entradas e saída desejada}
+          \PY{n}{versicolor\PYZus{}val\PYZus{}entrada} \PY{o}{=} \PY{n}{versicolor\PYZus{}treino}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{p}{:}\PY{l+m+mi}{4}\PY{p}{]}
+          \PY{n}{versicolor\PYZus{}val\PYZus{}sd} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{[}\PY{n}{versicolor\PYZus{}treino}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{3.2.4 - Resultados}\label{resultados}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}206}]:} \PY{n}{lista\PYZus{}percent\PYZus{}acertos} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
+              \PY{n}{rede\PYZus{}versicolor}\PY{o}{.}\PY{n}{pesos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{random\PYZus{}sample}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{}Randomização de pesos}
+              \PY{n}{rede\PYZus{}versicolor}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}ant}\PY{p}{(}\PY{n}{versicolor\PYZus{}entrada}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)} 
+              \PY{n}{rede\PYZus{}versicolor}\PY{o}{.}\PY{n}{treinar\PYZus{}rede}\PY{p}{(}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{versicolor\PYZus{}sd}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}    
+              \PY{n}{rede\PYZus{}versicolor}\PY{o}{.}\PY{n}{set\PYZus{}entradas\PYZus{}pós}\PY{p}{(}\PY{n}{versicolor\PYZus{}val\PYZus{}entrada}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+          
+              \PY{n}{acertos} \PY{o}{=} \PY{l+m+mi}{0}
+              \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{el} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{rede\PYZus{}versicolor}\PY{o}{.}\PY{n}{proc\PYZus{}saida}\PY{p}{(}\PY{n}{rede\PYZus{}versicolor}\PY{o}{.}\PY{n}{vetor\PYZus{}entradas}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                  \PY{k}{if} \PY{n}{versicolor\PYZus{}val\PYZus{}sd}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{n}{el}\PY{p}{:}
+                      \PY{n}{acertos} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+              \PY{n}{lista\PYZus{}percent\PYZus{}acertos}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{acertos}\PY{o}{*}\PY{l+m+mi}{100}\PY{o}{/}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 14
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 15
+Nº erros: 14
+Nº erros: 16
+Nº erros: 15
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 15
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 15
+Nº erros: 16
+Nº erros: 16
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}208}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{lista\PYZus{}percent\PYZus{}acertos}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percentual de acertos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nº de redes testadas}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Histograma 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_57_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Percebe-se que devido ao mal treinamento, a capacidade da rede de
+identificar as plantas Iris-Versicolor foi ruim, apresentando erros em
+aproximadamente 25\% das amostras.
+
+O mal treinamento se deve provavelmente ao fato de não ser possível
+separar de forma completamente linear as plantas Iris-Versicolor dos
+outros tipos de plantas.
+
+    \subsection{3.3}\label{section}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
