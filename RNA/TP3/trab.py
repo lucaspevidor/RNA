@@ -228,4 +228,151 @@ plt.plot(eqm)
 plt.grid()
 plt.xlabel('Nº de iterações')
 plt.ylabel('Erro quadrático médio')
+#plt.show()
+
+#Gerando um novo conjunto de validação
+x21 = np.transpose(np.array([np.random.uniform(-4,4,20)]))
+x22 = np.transpose(np.array([np.random.uniform(-4,4,20)]))
+x2 = np.append(x21, x22, axis=1)
+d2 = np.arctan(0.3*x21 + 0.7*x22)
+
+#Encontrando erro quadrático médio por iteração da rede linear:
+eqm = np.empty([len(linearNet.historicoPesos[0,:]), 1])
+for i in range(len(linearNet.historicoPesos[0,:])):
+    linearNet.pesos = np.transpose([linearNet.historicoPesos[:,i]])
+    saida_processada = np.empty([len(x[:,0]), 1])
+    for k in range(len(x[:,0])):
+        linearNet.set_entradas_pós(np.array([x2[k,:]]), normalizar=True)
+        saida_processada[k] = linearNet.proc_saida(linearNet.vetor_entradas, True)
+    erros = d2 - saida_processada
+    eqm[i] = np.mean(erros**2)
+print('EQM final da rede linear: {}'.format(eqm[i]))
+plt.figure()
+plt.plot(eqm)
+plt.grid()
+plt.title('Erro quadrático médio da rede linear')
+plt.xlabel('Nº de iterações')
+plt.ylabel('Erro quadrático médio')
+#Encontrando erro quadrático médio por iteração da rede sigmoidal:
+maxD2 = max(abs(d2))
+##########################
+eqm = np.empty([len(sigmoidNet.historicoPesos[0,:]), 1])
+for i in range(len(sigmoidNet.historicoPesos[0,:])):
+    sigmoidNet.pesos = np.transpose([sigmoidNet.historicoPesos[:,i]])
+    saida_processada = np.empty([len(x2[:,0]), 1])
+    for k in range(len(x[:,0])):
+        sigmoidNet.set_entradas_pós(np.array([x2[k,:]]), normalizar=True)
+        saida_processada[k] = (sigmoidNet.proc_saida(sigmoidNet.vetor_entradas, True) - 0.5)*2*maxD2
+    erros = d2 - saida_processada
+    eqm[i] = np.mean(erros**2)
+print('EQM final da rede sigmoidal: {}'.format(eqm[i]))
+plt.figure()
+plt.plot(eqm)
+plt.grid()
+plt.title('Erro quadrático médio da rede sigmoidal')
+plt.xlabel('Nº de iterações')
+plt.ylabel('Erro quadrático médio')
+#plt.show()
+
+plt.figure()
+plt.plot(x21, d2, 'b.')
+plt.plot(x21, saida_processada, 'r.')
+#plt.show()
+
+
+#Predição dos crimes violentos
+#importação de dados:
+import csv
+import os
+
+print('CHDIR: {}'.format(os.listdir()))
+#lendo dados de treinamento:
+with open('./RNA/TP3/dataset_teste.data', newline='') as f:
+    reader = csv.reader(f, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
+    dataset_treinamento = np.empty([1, 123])
+    for row in reader:
+        #print(row)
+        dataset_treinamento = np.append(dataset_treinamento, np.array([np.array(row)]), axis=0)
+
+x = dataset_treinamento[1:,:121]
+d = np.transpose([dataset_treinamento[1:, 122]])
+
+#Instanciando redes neurais:
+redeLinear = RedeNeural(121, 'Linear', use_bias=True)
+redeSigmoidal = RedeNeural(121, 'Sigmoid', use_bias=True)
+#Configurando entradas
+redeLinear.set_entradas_ant(x, normalizar=True)
+redeSigmoidal.set_entradas_ant(x, normalizar=True)
+#Configurando vetor de saidas para rede sigmoidal
+maxD = max(abs(d))
+newD = d/(2*maxD) + 0.5
+#Treinando as redes
+redeLinear.reset()
+redeLinear.treinar_rede(0.001, d, 4)
+redeSigmoidal.reset()
+redeSigmoidal.treinar_rede(0.05, newD, 2)
+
+#redeSigmoidal.set_entradas_pós(x, normalizar=True)
+saida_processada = (redeLinear.proc_saida(redeSigmoidal.vetor_entradas, normalizado=True))# - 0.5) * 2 * maxD
+#plt.show()
+
+print('asd')
+plt.figure()
+plt.plot(x[:,0], d, '.b')
+plt.plot(x[:,0], saida_processada, '.r')
+plt.show()
+
+#----------------------------------- Lendo os dados de validação --------------------------------------#
+with open('./RNA/TP3/dataset_valid.data', newline='') as f:
+    reader = csv.reader(f, delimiter=',', quoting=csv.QUOTE_NONNUMERIC)
+    dataset_treinamento = np.empty([1, 123])
+    for row in reader:
+        #print(row)
+        dataset_treinamento = np.append(dataset_treinamento, np.array([np.array(row)]), axis=0)
+
+x = dataset_treinamento[1:,:121]
+d = np.transpose([dataset_treinamento[1:, 122]])
+
+#Encontrando erro quadrático médio por iteração da rede sigmoidal:
+maxD2 = max(abs(d))
+##########################
+eqm = np.zeros([1, 1])
+for i in range(0, len(redeSigmoidal.historicoPesos[0,:]), 50):
+    redeSigmoidal.pesos = np.transpose([redeSigmoidal.historicoPesos[:,i]])
+    saida_processada = np.empty([len(x[:,0]), 1])
+    for k in range(len(x[:,0])):
+        redeSigmoidal.set_entradas_pós(np.array([x[k,:]]), normalizar=True)
+        saida_processada[k] = (redeSigmoidal.proc_saida(redeSigmoidal.vetor_entradas, True) - 0.5)*2*maxD2
+    erros = d - saida_processada
+    eqm = np.append(eqm, np.mean(erros**2))
+    #print('Peso: {}'.format(i))
+print('EQM final da rede sigmoidal: {}'.format(eqm[len(eqm)-1]))
+
+plt.figure()
+plt.plot(range(0, len(redeSigmoidal.historicoPesos[0,:]), 50), eqm[1:])
+plt.grid()
+plt.title('Erro quadrático médio da rede sigmoidal')
+plt.xlabel('Nº de iterações')
+plt.ylabel('Erro quadrático médio')
+plt.show()
+
+#Encontrando erro quadrático médio por iteração da rede linear:
+eqm = np.zeros([1, 1])
+for i in range(0, len(redeLinear.historicoPesos[0,:]), 200):
+    redeLinear.pesos = np.transpose([redeLinear.historicoPesos[:,i]])
+    saida_processada = np.empty([len(x[:,0]), 1])
+    for k in range(len(x[:,0])):
+        redeLinear.set_entradas_pós(np.array([x[k,:]]), normalizar=True)
+        saida_processada[k] = redeLinear.proc_saida(redeLinear.vetor_entradas, True)
+    erros = d - saida_processada
+    eqm = np.append(eqm, np.mean(erros**2))
+    #print('Peso: {}'.format(i))
+print('EQM final da rede sigmoidal: {}'.format(eqm[len(eqm)-1]))
+
+plt.figure()
+plt.plot(range(0, len(redeLinear.historicoPesos[0,:]), 200), eqm[1:])
+plt.grid()
+plt.title('Erro quadrático médio da rede sigmoidal')
+plt.xlabel('Nº de iterações')
+plt.ylabel('Erro quadrático médio')
 plt.show()
