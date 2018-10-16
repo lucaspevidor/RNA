@@ -157,20 +157,25 @@ class Neuronio:
                 print('Nº erros: {}'.format(len(self.vetor_entradas[:,0])-max(self.historicoAcertos)))
 
 class Camada:
-    def __init__(self, n_neuronios, n_entradas, func_act):
+    def __init__(self, n_entradas, n_neuronios, func_act):
         self.n_neuronios = n_neuronios
         self.n_entradas = n_entradas
         self.func_act = func_act
+        self.saidas = np.zeros([n_neuronios, 1])
+        self.entradas = np.zeros([n_entradas, 1])
 
         self.neuronios = []
         for i in range(n_neuronios):
             self.neuronios.append(Neuronio(n_entradas, func_act, use_bias=True))
     
-    def setEntradas(self, entradas):
-        self.entradas = entradas
+    def setEntradas(self):
         for i in range(self.n_neuronios):
-            self.neuronios[i].set_entradas_ant(entradas, False)
+            self.neuronios[i].set_entradas_ant(self.entradas, False)
 
+    def proc_saida(self):
+        self.setEntradas()
+        for i in range(self.n_neuronios):
+            self.saidas[i,0] = self.neuronios[i].proc_saida(self.neuronios[i].vetor_entradas, normalizado=True)
 
 class RedeNeural:
     def __init__(self, n_entradas, n_camadasOcultas, nn_camadasOcultas, n_saidas, func_act):
@@ -180,17 +185,29 @@ class RedeNeural:
         self.func_act=func_act
         self.nn_camadasOcultas = nn_camadasOcultas
         
+        self.entradas = np.zeros([n_entradas, 1])
+        self.saidas = np.zeros([n_saidas, 0])
+
         self.camadas = []
-        self.camadas.append(Neuronio(n_entradas, func_act, True))
-        for i in range(n_camadasOcultas):
-            self.camadas.append(Neuronio(nn_camadasOcultas, func_act, True))
-        self.camadas.append(Neuronio(n_saidas, func_act, True))
+        #Primeira camada, 1 neurônio para cada entrada
+        c = 0
+        self.camadas.append(Camada(n_entradas, n_entradas, func_act))
+        self.camadas[c].entradas = self.entradas
+        c += 1
+        #Primeira camada oculta, n_entradas igual a nº de entradas
+        if n_camadasOcultas != 0:
+            self.camadas.append(Camada(n_entradas, nn_camadasOcultas, func_act))
+            self.camadas[c].entradas = self.camadas[c-1].saidas
+            c += 1
+            #Demais camadas ocultas
+            for i in range(n_camadasOcultas-1):
+                self.camadas.append(Camada(nn_camadasOcultas, nn_camadasOcultas, func_act))
+                self.camadas[c].entradas = self.camadas[c-1].saidas
+                c += 1
+        self.camadas.append(Camada(nn_camadasOcultas, n_saidas, func_act))
+        self.camadas[c].entradas = self.camadas[c-1].saidas
 
-    def setEntradasAnt(self, entradas, normalizar):
-        self.camadas[0].set_entradas_ant(entradas, normalizar)
+        self.n_camadas = c+1
 
-    def setEntradasPos(self, entradas, normalizar):
-        self.camadas[0].set_entradas_pós(entradas, normalizar)
-
-r1 = RedeNeural(2, 0, 5, 1, 'Sigmoid')
+R1 = RedeNeural(2, 3, 5, 1, 'Sigmoid')
 print('ok')
