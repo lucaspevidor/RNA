@@ -170,7 +170,7 @@ class Camada:
     
     def setEntradas(self):
         for i in range(self.n_neuronios):
-            self.neuronios[i].set_entradas_ant(self.entradas, False)
+            self.neuronios[i].set_entradas_ant(np.transpose(self.entradas), False)
 
     def proc_saida(self):
         self.setEntradas()
@@ -185,8 +185,10 @@ class RedeNeural:
         self.func_act=func_act
         self.nn_camadasOcultas = nn_camadasOcultas
         
-        self.entradas = np.zeros([n_entradas, 1])
-        self.saidas = np.zeros([n_saidas, 0])
+        self.listaEntradas = np.zeros([0,0]) #Lista com todas as entradas a serem processadas
+        self.entradas = np.zeros([n_entradas, 1]) #Vetor de entradas para jogar nas camadas
+        self.saidas = np.zeros([n_saidas, 1]) #Vetor de saída p/ receber das camadas
+        self.listaSaidas = []
 
         self.camadas = []
         #Primeira camada, 1 neurônio para cada entrada
@@ -204,10 +206,83 @@ class RedeNeural:
                 self.camadas.append(Camada(nn_camadasOcultas, nn_camadasOcultas, func_act))
                 self.camadas[c].entradas = self.camadas[c-1].saidas
                 c += 1
-        self.camadas.append(Camada(nn_camadasOcultas, n_saidas, func_act))
+            self.camadas.append(Camada(nn_camadasOcultas, n_saidas, func_act))
+        else:
+            self.camadas.append(Camada(n_entradas, n_saidas, func_act))
         self.camadas[c].entradas = self.camadas[c-1].saidas
+        self.saidas = self.camadas[c].saidas
 
         self.n_camadas = c+1
 
-R1 = RedeNeural(2, 3, 5, 1, 'Sigmoid')
+    #Definição de entradas
+    #Função utilizada para configurar o vetor de entrada interno da classe, juntamente com normalização, adição
+    #da coluna de bias. Utilizar quando a média e desvpad para normalização ainda não foram definidos.
+    def set_entradas_ant(self, entradas, normalizar):        
+        if normalizar:           
+            vetorEntradas = self.normalizar(entradas, False)     
+            for i in range(len(vetorEntradas)):
+                self.entradas[i] = vetorEntradas[i]
+        else:
+            for i in range(len(entradas)):
+                self.entradas[i] = entradas[i]
+    
+    #Definir entradas após treinamento da rede
+    #Função utilizada para configurar o vetor de entrada interno da classe, juntamente com normalização, adição
+    #da coluna de bias. Utilizar quando a média e desvpad para normalização JÁ foram definidos.
+    def set_entradas_pós(self, entradas, normalizar):
+        if normalizar:           
+            vetorEntradas = self.normalizar(entradas, True)     
+            for i in range(len(vetorEntradas)):
+                self.entradas[i] = vetorEntradas[i]
+        else:
+            for i in range(len(entradas)):
+                self.entradas[i] = entradas[i]
+    
+    def normalizar(self, entradas, utilizar_parametros_anteriores):
+        if utilizar_parametros_anteriores == False:
+            #Encontrar média e desvio padrão a partir das entradas fornecidas.
+            #Executado antes do treinamento da rede
+            self.media = np.empty(len(entradas[0,:]), dtype=float)
+            self.desvpad = np.empty(len(entradas[0,:]), dtype=float)
+            self.entr_normalizada = np.empty((len(entradas[:,0]), len(entradas[0,:])), dtype=float)
+        
+            for i in range(0, len(entradas[0,:])):
+                self.media[i] = np.mean(entradas[:,i])
+                self.desvpad[i] = np.sqrt(np.var(entradas[:,i]))            
+                self.entr_normalizada[:,i] = (entradas[:,i] - self.media[i] ) / self.desvpad[i]
+            return self.entr_normalizada
+        else:
+            #Normaliza os dados de entrada fornecidos conforme a média e desvio padrão já encontrados anteriormente
+            entr_nova_normalizada = np.empty((len(entradas[:,0]), len(entradas[0,:])), dtype=float)
+            for i in range(0, len(entradas[0,:])):                
+                entr_nova_normalizada[:,i] = (entradas[:,i] - self.media[i] ) / self.desvpad[i]            
+
+            return entr_nova_normalizada
+
+    def proc_saidas(self, normalizar):        
+        for k in range(len(self.listaEntradas)):
+            self.set_entradas_pós(np.transpose([self.listaEntradas[k]]), normalizar)
+            for i in range(self.n_camadas):
+                self.camadas[i].proc_saida()
+            self.listaSaidas.append(self.saidas)
+
+
+#------------------------------------------------------------------------------------------------------------------
+
+c1 = Camada(2, 3, 'Sigmoid')
+c2 = Camada(3, 1, 'Sigmoid')
+c3 = Camada(1, 1, 'Sigmoid')
+
+c2.entradas = c1.saidas
+c3.entradas = c2.saidas
+
+entr = np.transpose([[3,2]])
+c1.entradas = entr
+entr[1][0] = 10
+c1.saidas = np.transpose([[1,5,6]])
+
+entr = np.array([[2,3]])
+rede = RedeNeural(2, 0, 0, 2, 'Sigmoid')
+rede.listaEntradas = np.array([[2, 3],[4,5]])
+rede.proc_saidas(normalizar=False)
 print('ok')
