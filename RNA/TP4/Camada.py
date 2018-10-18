@@ -11,12 +11,24 @@ class Neuronio:
             self.pesos = np.empty((n_entradas+1, 1), dtype=float)
         else:
             self.pesos = np.empty((n_entradas, 1), dtype=float)
+        self.novosPesos = np.array([])
+        self.pesosAnteriores = self.pesos
+
         self.func_act = func_act
+        self.delta = 0        
     
     def reset(self):
-        #Zerar pesos
-        self.pesos = np.zeros((len(self.pesos[:,0]), 1), dtype=float)
-            
+        #Fazer pesos randomizados
+        vetor = np.ones((len(self.pesos[:,0]), 1), dtype=float)
+        for i in range(len(vetor[:,0])):
+            vetor[i,0] = np.random.normal(scale=0.3)
+        self.pesos = vetor
+    
+    @staticmethod
+    def fSigmoid(v):
+        saida = 1/(1+np.e**(-v))
+        return saida
+    
     #Definição de entradas
     #Função utilizada para configurar o vetor de entrada interno da classe, juntamente com normalização, adição
     #da coluna de bias. Utilizar quando a média e desvpad para normalização ainda não foram definidos.
@@ -89,15 +101,14 @@ class Neuronio:
             self.saida = saida[1:]
             return saida[1:]
         
-        elif(self.func_act == 'Linear'):
-            saida = v
+        elif(self.func_act == 'Linear'):            
+            self.saida = v
             return saida
 
-        elif(self.func_act == 'Sigmoid'):
-            saida = 1/(1+np.e**(-v))
-            return saida
+        elif(self.func_act == 'Sigmoid'): 
+            self.saida = self.fSigmoid(v)
+            return self.saida
         
-            
     def treinar_rede(self, fator_aprendizado, saida_desejada, max_iterações):
         redeTreinada = False
         self.historicoAcertos = []
@@ -156,6 +167,12 @@ class Neuronio:
                 self.pesos = np.transpose([self.historicoPesos[:, indiceMax+1]])
                 print('Nº erros: {}'.format(len(self.vetor_entradas[:,0])-max(self.historicoAcertos)))
 
+    def trocarPesos(self):
+        self.pesosAnteriores = self.pesos
+        self.pesos = self.novosPesos
+        self.novosPesos = np.array([])
+        
+
 class Camada:
     def __init__(self, n_entradas, n_neuronios, func_act):
         self.n_neuronios = n_neuronios
@@ -167,6 +184,7 @@ class Camada:
         self.neuronios = []
         for i in range(n_neuronios):
             self.neuronios.append(Neuronio(n_entradas, func_act, use_bias=True))
+            self.neuronios[i].reset()
     
     def setEntradas(self):
         for i in range(self.n_neuronios):
@@ -260,11 +278,51 @@ class RedeNeural:
             return entr_nova_normalizada
 
     def proc_saidas(self, normalizar):        
+        self.listaSaidas = []
         for k in range(len(self.listaEntradas)):
             self.set_entradas_pós(np.transpose([self.listaEntradas[k]]), normalizar)
             for i in range(self.n_camadas):
                 self.camadas[i].proc_saida()
             self.listaSaidas.append(self.saidas)
+
+    def proc_saida(self, indice, normalizar):
+        self.listaSaidas = []
+        self.set_entradas_pós(np.transpose([self.listaEntradas[indice]]), normalizar)
+        for i in range(self.n_camadas):
+            self.camadas[i].proc_saida()
+        self.listaSaidas.append(self.saidas)
+
+    def treinar_rede(self, saidas_desejadas, tx_aprendizado_inicial, annealing, tx_momento, n_iteracoes):        
+        #primeiro passo: Processar a saída da rede com os dados atuais. A listaEntradas deve estar normalizada e configurada
+        for m in range(n_iteracoes):
+            if m==2900:
+                print('okok')
+            tx_aprendizado = tx_aprendizado_inicial#/(1+(m/annealing))
+            for l in range(len(self.listaEntradas)):
+                self.proc_saida(l, False)
+                print('')
+                #cálculo do delta k e primeiro ajuste de pesos p/ última camada
+                for n in self.camadas[self.n_camadas-1].neuronios:
+                    n.delta = n.saida[0][0]*(1-n.saida[0][0])*(saidas_desejadas[l][0]-n.saida[0][0])
+                    momento = tx_momento * (n.pesos - n.pesosAnteriores)
+                    n.novosPesos = n.pesos + np.transpose([tx_aprendizado*n.delta*(np.append(self.camadas[self.n_camadas-2].saidas, np.array([[1]])))]) + momento
+                #cálculo do delta j e ajustes de pesos para camadas ocultas e primeira camada
+                for c in range(self.n_camadas-2, -1, -1):
+                    for k, n in enumerate(self.camadas[c].neuronios):
+                        #cálculo do somatório de wkdk da camada seguinte
+                        soma = 0
+                        for i, n2 in enumerate(self.camadas[c+1].neuronios):
+                            soma += n2.delta * n2.pesos[k, 0]
+                        #cálculo do deltaJ
+                        n.delta = n.saida[0][0]*(1-n.saida[0][0])*soma
+                        momento = tx_momento * (n.pesos - n.pesosAnteriores)
+                        n.novosPesos = n.pesos + np.transpose([tx_aprendizado*n.delta*(np.append(self.camadas[c].entradas, np.array([[1]])))]) + momento
+
+                #Troca os pesos dos neuronios
+                for i in range(len(self.camadas)):
+                    for n in self.camadas[i].neuronios:
+                        n.trocarPesos()
+
 
 
 #------------------------------------------------------------------------------------------------------------------
@@ -281,8 +339,12 @@ c1.entradas = entr
 entr[1][0] = 10
 c1.saidas = np.transpose([[1,5,6]])
 
-entr = np.array([[2,3]])
-rede = RedeNeural(2, 0, 0, 2, 'Sigmoid')
-rede.listaEntradas = np.array([[2, 3],[4,5]])
-rede.proc_saidas(normalizar=False)
+entr = np.array([[0,0],[0,1],[1,0],[1,1]])
+#entr = np.array([[0,0],[1,1]])
+sd = np.transpose(np.array([[0,1,1,0]]))
+#sd = np.transpose(np.array([[0,1]]))
+rede = RedeNeural(2, 0, 0, 1, 'Sigmoid')
+rede.listaEntradas = rede.normalizar(entr, utilizar_parametros_anteriores=False)
+rede.treinar_rede(sd, 10, 60, 0.05, 3000)
+
 print('ok')
